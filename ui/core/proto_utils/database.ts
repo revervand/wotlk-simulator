@@ -275,7 +275,11 @@ export class Database {
 		return Database.getWowheadTooltipData(id, 'spell');
 	}
 	private static async getWowheadTooltipData(id: number, tooltipPostfix: string): Promise<IconData> {
+<<<<<<< HEAD
 		const url = `https://nether.wowhead.com/wotlk/tooltip/${tooltipPostfix}/${id}?lvl=${CHARACTER_LEVEL}`;
+=======
+		const url = `http://94.198.217.140:5000/tooltip/${tooltipPostfix}/${id}`;
+>>>>>>> bd5e21445 (add basic enchants)
 		try {
 			const response = await fetch(url);
 			const json = await response.json();
