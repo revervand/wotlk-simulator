@@ -211,6 +211,103 @@ func NewHunter(character *core.Character, options *proto.Player) *Hunter {
 	return hunter
 }
 
+<<<<<<< HEAD
+=======
+func init() {
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceSindorei, Class: proto.Class_ClassHunter}] = stats.Stats{
+		stats.Health:    7324,
+		stats.Strength:  71,
+		stats.Agility:   183,
+		stats.Stamina:   126,
+		stats.Intellect: 94,
+		stats.Spirit:    96,
+		stats.Mana:      5046,
+
+		stats.AttackPower:       140,
+		stats.RangedAttackPower: 150,
+		stats.MeleeCrit:         -1.53 * core.CritRatingPerCritChance,
+	}
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceDraenei, Class: proto.Class_ClassHunter}] = stats.Stats{
+		stats.Health:    7324,
+		stats.Strength:  75,
+		stats.Agility:   178,
+		stats.Stamina:   127,
+		stats.Intellect: 91,
+		stats.Spirit:    99,
+		stats.Mana:      5046,
+
+		stats.AttackPower:       140,
+		stats.RangedAttackPower: 150,
+		stats.MeleeCrit:         -1.53 * core.CritRatingPerCritChance,
+	}
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceDwarf, Class: proto.Class_ClassHunter}] = stats.Stats{
+		stats.Health:    7324,
+		stats.Strength:  76,
+		stats.Agility:   177,
+		stats.Stamina:   131,
+		stats.Intellect: 89,
+		stats.Spirit:    96,
+		stats.Mana:      5046,
+
+		stats.AttackPower:       140,
+		stats.RangedAttackPower: 150,
+		stats.MeleeCrit:         -1.53 * core.CritRatingPerCritChance,
+	}
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceNightElf, Class: proto.Class_ClassHunter}] = stats.Stats{
+		stats.Health:    7324,
+		stats.Strength:  71,
+		stats.Agility:   193,
+		stats.Stamina:   127,
+		stats.Intellect: 93,
+		stats.Spirit:    97,
+		stats.Mana:      5046,
+
+		stats.AttackPower:       140,
+		stats.RangedAttackPower: 150,
+		stats.MeleeCrit:         -1.53 * core.CritRatingPerCritChance,
+	}
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceOrc, Class: proto.Class_ClassHunter}] = stats.Stats{
+		stats.Health:    7324,
+		stats.Strength:  77,
+		stats.Agility:   178,
+		stats.Stamina:   130,
+		stats.Intellect: 87,
+		stats.Spirit:    100,
+		stats.Mana:      5046,
+
+		stats.AttackPower:       140,
+		stats.RangedAttackPower: 150,
+		stats.MeleeCrit:         -1.53 * core.CritRatingPerCritChance,
+	}
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceTauren, Class: proto.Class_ClassHunter}] = stats.Stats{
+		stats.Health:    7324,
+		stats.Strength:  79,
+		stats.Agility:   183,
+		stats.Stamina:   130,
+		stats.Intellect: 88,
+		stats.Spirit:    99,
+		stats.Mana:      5046,
+
+		stats.AttackPower:       140,
+		stats.RangedAttackPower: 150,
+		stats.MeleeCrit:         -1.53 * core.CritRatingPerCritChance,
+	}
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceTroll, Class: proto.Class_ClassHunter}] = stats.Stats{
+		stats.Health:    7324,
+		stats.Strength:  75,
+		stats.Agility:   190,
+		stats.Stamina:   129,
+		stats.Intellect: 89,
+		stats.Spirit:    98,
+		stats.Mana:      5046,
+
+		stats.AttackPower:       140,
+		stats.RangedAttackPower: 150,
+		stats.MeleeCrit:         -1.53 * core.CritRatingPerCritChance,
+	}
+}
+
+>>>>>>> 83c7dbabb (add all races and enbale cyrillic search for items/gems/ecnhants)
 // Agent is a generic way to access underlying hunter on any of the agents.
 type HunterAgent interface {
 	GetHunter() *Hunter

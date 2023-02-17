@@ -293,6 +293,7 @@ func New(char *core.Character, form DruidForm, selfBuffs SelfBuffs, talents stri
 	return druid
 }
 
+<<<<<<< HEAD
 type DruidSpell struct {
 	*core.Spell
 	FormMask DruidForm
@@ -301,6 +302,59 @@ type DruidSpell struct {
 func (ds *DruidSpell) IsReady(sim *core.Simulation) bool {
 	if ds == nil {
 		return false
+=======
+func init() {
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceNaga, Class: proto.Class_ClassDruid}] = stats.Stats{
+		stats.Health:      6892,
+		stats.Strength:    94,
+		stats.Agility:     77,
+		stats.Stamina:     100,
+		stats.Intellect:   138,
+		stats.Spirit:      185,
+		stats.Mana:        3496,
+		stats.SpellCrit:   1.85 * core.CritRatingPerCritChance, // Class-specific constant
+		stats.MeleeCrit:   8.48 * core.CritRatingPerCritChance,
+		stats.AttackPower: -20,
+	}
+
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceGoblin, Class: proto.Class_ClassDruid}] = stats.Stats{
+		stats.Health:      6892,
+		stats.Strength:    94,
+		stats.Agility:     77,
+		stats.Stamina:     100,
+		stats.Intellect:   138,
+		stats.Spirit:      185,
+		stats.Mana:        3496,
+		stats.SpellCrit:   1.85 * core.CritRatingPerCritChance, // Class-specific constant
+		stats.MeleeCrit:   8.48 * core.CritRatingPerCritChance,
+		stats.AttackPower: -20,
+	}
+
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceZandalar, Class: proto.Class_ClassDruid}] = stats.Stats{
+		stats.Health:      6892,
+		stats.Strength:    94,
+		stats.Agility:     77,
+		stats.Stamina:     100,
+		stats.Intellect:   138,
+		stats.Spirit:      185,
+		stats.Mana:        3496,
+		stats.SpellCrit:   1.85 * core.CritRatingPerCritChance, // Class-specific constant
+		stats.MeleeCrit:   7.48 * core.CritRatingPerCritChance,
+		stats.AttackPower: -20,
+	}
+
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceTauren, Class: proto.Class_ClassDruid}] = stats.Stats{
+		stats.Health:      6892, // 8227 health shown on naked character (would include tauren bonus)
+		stats.Strength:    94,
+		stats.Agility:     78,
+		stats.Stamina:     99,
+		stats.Intellect:   139,
+		stats.Spirit:      161,
+		stats.Mana:        3496,                                // 5301 mana shown on naked character
+		stats.SpellCrit:   1.85 * core.CritRatingPerCritChance, // Class-specific constant
+		stats.MeleeCrit:   7.48 * core.CritRatingPerCritChance, // 8.41% chance to crit shown on naked character screen
+		stats.AttackPower: -20,
+>>>>>>> 83c7dbabb (add all races and enbale cyrillic search for items/gems/ecnhants)
 	}
 	return ds.Spell.IsReady(sim)
 }

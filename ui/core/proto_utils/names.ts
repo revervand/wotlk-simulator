@@ -50,6 +50,7 @@ export const rangedWeaponTypeNames: Map<RangedWeaponType, string> = new Map([
 	[RangedWeaponType.RangedWeaponTypeWand, 'Wand'],
 ]);
 
+<<<<<<< HEAD
 export const raceNames: Map<Race, string> = new Map([
 	[Race.RaceUnknown, 'None'],
 	[Race.RaceBloodElf, 'Blood Elf'],
@@ -63,6 +64,34 @@ export const raceNames: Map<Race, string> = new Map([
 	[Race.RaceTroll, 'Troll'],
 	[Race.RaceUndead, 'Undead'],
 ]);
+=======
+export const raceNames: Record<Race, string> = {
+	[Race.RaceUnknown]: 'None',
+	[Race.RaceSindorei]: 'Sindorei',
+	[Race.RaceDraenei]: 'Draenei',
+	[Race.RaceDwarf]: 'Dwarf',
+	[Race.RaceGnome]: 'Gnome',
+	[Race.RaceHuman]: 'Human',
+	[Race.RaceNightElf]: 'Night Elf',
+	[Race.RaceOrc]: 'Orc',
+	[Race.RaceTauren]: 'Tauren',
+	[Race.RaceTroll]: 'Troll',
+	[Race.RaceUndead]: 'Undead',	
+	[Race.RaceDwarfOfBlackIron]:'DwarfOfBlackIron',
+	[Race.RaceZandalar]:'Zandalar',
+	[Race.RaceEredar]:'Eredar',
+	[Race.RaceNaga]:'Naga',
+	[Race.RaceNightborne]:'Nigthborne',
+	[Race.RaceWorgen]:'Worgen',
+	[Race.RaceVulpera]:'Vulpera',
+	[Race.RaceDraktir]:'Draktir',
+	[Race.RaceVoidElves]:'VoidElf',
+	[Race.RaceHighElves]:'HighElf',
+	[Race.RaceLightDraenei]:'LigthDraenei',
+	[Race.RaceGoblin]:'Goblin',
+	[Race.RacePanda]:'Pandaren',
+};
+>>>>>>> 83c7dbabb (add all races and enbale cyrillic search for items/gems/ecnhants)
 
 export function nameToRace(name: string): Race {
 	const normalized = name.toLowerCase().replaceAll(' ', '');

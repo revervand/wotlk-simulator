@@ -290,3 +290,70 @@ func (shaman *Shaman) ElementalCritMultiplier(secondary float64) float64 {
 	critBonus := 0.2*float64(shaman.Talents.ElementalFury) + secondary
 	return shaman.SpellCritMultiplier(1, critBonus)
 }
+<<<<<<< HEAD
+=======
+
+func init() {
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceDwarfOfBlackIron, Class: proto.Class_ClassShaman}] = stats.Stats{
+		stats.Health:      8109,
+		stats.Strength:    121,
+		stats.Agility:     71,
+		stats.Stamina:     135,
+		stats.Intellect:   141,
+		stats.Spirit:      145,
+		stats.Mana:        6441,
+		stats.SpellCrit:   3.2 * core.CritRatingPerCritChance,
+		stats.AttackPower: 95, // TODO: confirm this.
+		stats.MeleeCrit:   2.92 * core.CritRatingPerCritChance,
+	}
+
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceDraenei, Class: proto.Class_ClassShaman}] = stats.Stats{
+		stats.Health:      6759,
+		stats.Strength:    121,
+		stats.Agility:     71,
+		stats.Stamina:     135,
+		stats.Intellect:   126,
+		stats.Spirit:      145,
+		stats.Mana:        4396,
+		stats.SpellCrit:   2.2 * core.CritRatingPerCritChance,
+		stats.AttackPower: 95, // TODO: confirm this.
+		stats.MeleeCrit:   2.92 * core.CritRatingPerCritChance,
+	}
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceOrc, Class: proto.Class_ClassShaman}] = stats.Stats{
+		stats.Health:      6759,
+		stats.Strength:    123,
+		stats.Agility:     71,
+		stats.Stamina:     138,
+		stats.Intellect:   122,
+		stats.Spirit:      146,
+		stats.Mana:        4396,
+		stats.SpellCrit:   2.2 * core.CritRatingPerCritChance,
+		stats.AttackPower: 95, // TODO: confirm this.
+		stats.MeleeCrit:   2.92 * core.CritRatingPerCritChance,
+	}
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceTauren, Class: proto.Class_ClassShaman}] = stats.Stats{
+		stats.Health:      6759,
+		stats.Strength:    125,
+		stats.Agility:     69,
+		stats.Stamina:     138,
+		stats.Intellect:   120,
+		stats.Spirit:      145,
+		stats.Mana:        4396,
+		stats.SpellCrit:   2.2 * core.CritRatingPerCritChance,
+		stats.AttackPower: 95, // TODO: confirm this.
+		stats.MeleeCrit:   2.92 * core.CritRatingPerCritChance,
+	}
+	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceTroll, Class: proto.Class_ClassShaman}] = stats.Stats{
+		stats.Health:      6759,
+		stats.Strength:    121,
+		stats.Agility:     76,
+		stats.Stamina:     137,
+		stats.Intellect:   122,
+		stats.Spirit:      144,
+		stats.Mana:        4396,
+		stats.SpellCrit:   2.2 * core.CritRatingPerCritChance,
+		stats.AttackPower: 95, // TODO: confirm this.
+		stats.MeleeCrit:   2.92 * core.CritRatingPerCritChance,
+	}
+}
+>>>>>>> 83c7dbabb (add all races and enbale cyrillic search for items/gems/ecnhants)
