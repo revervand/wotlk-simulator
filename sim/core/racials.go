@@ -246,15 +246,8 @@ func applyRaceEffects(agent Agent) {
 		character.PseudoStats.ReducedPhysicalHitTakenChance += 0.02
 		// TODO: Shadowmeld?
 	case proto.Race_RaceOrc:
-<<<<<<< HEAD
-		// Command (Pet damage +5%)
-		for _, pet := range character.Pets {
-			pet.PseudoStats.DamageDealtMultiplier *= 1.05
-		}
-=======
 		character.stats[stats.Expertise] += 2.0 * ExpertisePerQuarterPercentReduction
 		character.MultiplyStat(stats.Strength, 1.02)
->>>>>>> a9434f0b2 (add bonus for races and basic stats)
 
 		// Blood Fury
 		actionID := ActionID{SpellID: 316373}
@@ -289,12 +282,6 @@ func applyRaceEffects(agent Agent) {
 			Type:  CooldownTypeDPS,
 		})
 
-<<<<<<< HEAD
-		// Axe specialization
-		applyWeaponSpecialization(character, 5*ExpertisePerQuarterPercentReduction,
-			proto.WeaponType_WeaponTypeAxe, proto.WeaponType_WeaponTypeFist)
-=======
->>>>>>> a9434f0b2 (add bonus for races and basic stats)
 	case proto.Race_RaceTauren:
 		character.PseudoStats.ReducedNatureHitTakenChance += 0.02
 		character.AddStat(stats.Health, character.GetBaseStats()[stats.Health]*0.05)
