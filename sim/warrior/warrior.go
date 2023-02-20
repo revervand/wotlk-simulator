@@ -82,13 +82,21 @@ type Warrior struct {
 	DefensiveStanceAura *core.Aura
 	BerserkerStanceAura *core.Aura
 
-	BloodsurgeAura  *core.Aura
-	SuddenDeathAura *core.Aura
-	ShieldBlockAura *core.Aura
+	BloodsurgeAura      *core.Aura
+	PouringOutAngerProc *core.Aura
+	SuddenDeathAura     *core.Aura
+	ShieldBlockAura     *core.Aura
 
 	DemoralizingShoutAuras core.AuraArray
 	SunderArmorAuras       core.AuraArray
 	ThunderClapAuras       core.AuraArray
+
+	// T4 helpers
+	SetBonusDPS2T4       bool
+	SetBonusDPS4T4       bool
+	PouringAngerWasFaded bool
+	// 4t4 Fury additional spell
+	CircularAttack *core.Spell
 }
 
 func (warrior *Warrior) GetCharacter() *core.Character {
@@ -134,6 +142,9 @@ func (warrior *Warrior) Initialize() {
 	warrior.RegisterHeroicThrow()
 	warrior.RegisterRendSpell()
 
+	// 4t4 fury extra spell
+	warrior.registerCircularAttackSpell()
+
 	warrior.SunderArmor = warrior.newSunderArmorSpell(false)
 	warrior.SunderArmorDevastate = warrior.newSunderArmorSpell(true)
 
@@ -165,6 +176,17 @@ func NewWarrior(character *core.Character, talents string, inputs WarriorInputs)
 	// Base dodge unaffected by Diminishing Returns
 	warrior.PseudoStats.BaseDodge += 0.03664
 	warrior.PseudoStats.BaseParry += 0.05
+
+	if warrior.HasSetBonus(ItemSetWarriorDPST4, 2) {
+		warrior.SetBonusDPS2T4 = true
+		if warrior.HasSetBonus(ItemSetWarriorDPST4, 4) {
+			warrior.SetBonusDPS4T4 = true
+		} else {
+			warrior.SetBonusDPS4T4 = false
+		}
+	} else {
+		warrior.SetBonusDPS2T4 = false
+	}
 
 	return warrior
 }
@@ -211,124 +233,6 @@ func (warrior *Warrior) intensifyRageCooldown(baseCd time.Duration) time.Duratio
 	return []time.Duration{baseCd * 100, baseCd * 89, baseCd * 78, baseCd * 67}[warrior.Talents.IntensifyRage]
 }
 
-<<<<<<< HEAD
-=======
-func init() {
-	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceNightborne, Class: proto.Class_ClassWarrior}] = stats.Stats{
-		stats.Health:      9611,
-		stats.Strength:    187,
-		stats.Agility:     110,
-		stats.Stamina:     170,
-		stats.Intellect:   33,
-		stats.Spirit:      62,
-		stats.AttackPower: 240,
-		stats.MeleeCrit:   3.188 * core.CritRatingPerCritChance,
-	}
-
-	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceDwarfOfBlackIron, Class: proto.Class_ClassWarrior}] = stats.Stats{
-		stats.Health:      9611,
-		stats.Strength:    186,
-		stats.Agility:     109,
-		stats.Stamina:     171,
-		stats.Intellect:   35,
-		stats.Spirit:      58,
-		stats.AttackPower: 240,
-		stats.MeleeCrit:   3.188 * core.CritRatingPerCritChance,
-	}
-
-	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceDraenei, Class: proto.Class_ClassWarrior}] = stats.Stats{
-		stats.Health:      9611,
-		stats.Strength:    175,
-		stats.Agility:     110,
-		stats.Stamina:     159,
-		stats.Intellect:   37,
-		stats.Spirit:      61,
-		stats.AttackPower: 220,
-		stats.MeleeCrit:   3.188 * core.CritRatingPerCritChance,
-	}
-	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceDwarf, Class: proto.Class_ClassWarrior}] = stats.Stats{
-		stats.Health:      9651,
-		stats.Strength:    179,
-		stats.Agility:     109,
-		stats.Stamina:     160,
-		stats.Intellect:   35,
-		stats.Spirit:      58,
-		stats.AttackPower: 220,
-		stats.MeleeCrit:   3.188 * core.CritRatingPerCritChance,
-	}
-	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceGnome, Class: proto.Class_ClassWarrior}] = stats.Stats{
-		stats.Health:      9581,
-		stats.Strength:    169,
-		stats.Agility:     116,
-		stats.Stamina:     159,
-		stats.Intellect:   42,
-		stats.Spirit:      59,
-		stats.AttackPower: 220,
-		stats.MeleeCrit:   3.188 * core.CritRatingPerCritChance,
-	}
-	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceHuman, Class: proto.Class_ClassWarrior}] = stats.Stats{
-		stats.Health:      9621,
-		stats.Strength:    174,
-		stats.Agility:     113,
-		stats.Stamina:     159,
-		stats.Intellect:   36,
-		stats.Spirit:      63,
-		stats.AttackPower: 220,
-		stats.MeleeCrit:   3.188 * core.CritRatingPerCritChance,
-	}
-	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceNightElf, Class: proto.Class_ClassWarrior}] = stats.Stats{
-		stats.Health:      9611,
-		stats.Strength:    179,
-		stats.Agility:     118,
-		stats.Stamina:     159,
-		stats.Intellect:   36,
-		stats.Spirit:      59,
-		stats.AttackPower: 220,
-		stats.MeleeCrit:   3.188 * core.CritRatingPerCritChance,
-	}
-	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceOrc, Class: proto.Class_ClassWarrior}] = stats.Stats{
-		stats.Health:      9641,
-		stats.Strength:    177,
-		stats.Agility:     110,
-		stats.Stamina:     160,
-		stats.Intellect:   33,
-		stats.Spirit:      62,
-		stats.AttackPower: 220,
-		stats.MeleeCrit:   3.188 * core.CritRatingPerCritChance,
-	}
-	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceTauren, Class: proto.Class_ClassWarrior}] = stats.Stats{
-		stats.Health:      10047,
-		stats.Strength:    179,
-		stats.Agility:     108,
-		stats.Stamina:     160,
-		stats.Intellect:   31,
-		stats.Spirit:      61,
-		stats.AttackPower: 220,
-		stats.MeleeCrit:   3.188 * core.CritRatingPerCritChance,
-	}
-	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceTroll, Class: proto.Class_ClassWarrior}] = stats.Stats{
-		stats.Health:      9631,
-		stats.Strength:    175,
-		stats.Agility:     115,
-		stats.Stamina:     159,
-		stats.Intellect:   32,
-		stats.Spirit:      60,
-		stats.AttackPower: 220,
-		stats.MeleeCrit:   3.188 * core.CritRatingPerCritChance,
-	}
-	core.BaseStats[core.BaseStatsKey{Race: proto.Race_RaceUndead, Class: proto.Class_ClassWarrior}] = stats.Stats{
-		stats.Health:      9541,
-		stats.Strength:    173,
-		stats.Agility:     111,
-		stats.Stamina:     159,
-		stats.Intellect:   34,
-		stats.Spirit:      64,
-		stats.AttackPower: 220,
-		stats.MeleeCrit:   3.188 * core.CritRatingPerCritChance,
-	}
-}
-
->>>>>>> 83c7dbabb (add all races and enbale cyrillic search for items/gems/ecnhants)
 // Agent is a generic way to access underlying warrior on any of the agents.
 type WarriorAgent interface {
 	GetWarrior() *Warrior

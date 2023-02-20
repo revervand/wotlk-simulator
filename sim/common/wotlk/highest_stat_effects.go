@@ -144,6 +144,7 @@ func init() {
 	newDeathsChoiceEffect(47131, heroicAuraIDs, "Deaths Verdict H", 510)
 
 	newDeathsChoiceEffect(47303, normalAuraIDs, "Deaths Choice", 450)
+
 	core.AddEffectsToTest = true
 	newDeathsChoiceEffect(47464, heroicAuraIDs, "Deaths Choice H", 510)
 }
