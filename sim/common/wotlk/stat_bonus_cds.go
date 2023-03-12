@@ -73,6 +73,12 @@ func init() {
 	//newSpellPowerActive(38073, 120, time.Second*15, time.Minute*2) // Will of the Red Dragonflight
 	//newSpellPowerActive(38213, 149, time.Second*20, time.Minute*2) // Harbringer's Wrath
 	//newSpellPowerActive(38527, 183, time.Second*20, time.Minute*2) // Strike of the Seas
+	newSpellPowerActive(154445, 620, time.Second*15, time.Minute*1)  // Счастливая карта 232
+	newSpellPowerActive(154446, 700, time.Second*15, time.Minute*1)  // Счастливая карта 245
+	newSpellPowerActive(154447, 790, time.Second*15, time.Minute*1)  // Счастливая карта 258
+	newSpellPowerActive(154448, 890, time.Second*15, time.Minute*1)  // Счастливая карта 271
+	newSpellPowerActive(154449, 1003, time.Second*15, time.Minute*1) // Счастливая карта 284
+
 	newSpellPowerActive(38760, 145, time.Second*20, time.Minute*2) // Mendicant's Charm
 	newSpellPowerActive(38762, 145, time.Second*20, time.Minute*2) // Insignia of Bloody Fire
 	newSpellPowerActive(38765, 202, time.Second*20, time.Minute*2) // Rune of Infinite Power
