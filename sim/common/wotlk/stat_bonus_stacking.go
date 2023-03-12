@@ -134,7 +134,7 @@ func init() {
 		longlegPower := core.MakeStackingAura(character, core.StackingStatAura{
 			Aura: core.Aura{
 				Label:     "Переполняющая мощь",
-				ActionID:  core.ActionID{ItemID: 305655},
+				ActionID:  core.ActionID{SpellID: 305655},
 				Duration:  time.Second * 3,
 				MaxStacks: 1,
 				OnGain: func(aura *core.Aura, sim *core.Simulation) {
@@ -150,7 +150,7 @@ func init() {
 		longlegStack := core.MakeStackingAura(character, core.StackingStatAura{
 			Aura: core.Aura{
 				Label:     "Чародейская искра",
-				ActionID:  core.ActionID{ItemID: 305654},
+				ActionID:  core.ActionID{SpellID: 305654},
 				Duration:  time.Second * 10,
 				MaxStacks: 10,
 				OnCastComplete: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell) {
