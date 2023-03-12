@@ -140,6 +140,50 @@ func newStackingStatBonusCD(config StackingStatBonusCD) {
 }
 
 func init() {
+	core.NewItemEffect(80779, func(agent core.Agent) {
+		character := agent.GetCharacter()
+		longlegPower := core.MakeStackingAura(character, core.StackingStatAura{
+			Aura: core.Aura{
+				Label:     "Переполняющая мощь",
+				ActionID:  core.ActionID{ItemID: 305655},
+				Duration:  time.Second * 3,
+				MaxStacks: 1,
+				OnGain: func(aura *core.Aura, sim *core.Simulation) {
+					aura.SetStacks(sim, 1)
+				},
+				OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+					aura.Deactivate(sim)
+				},
+			},
+			BonusPerStack: stats.Stats{stats.SpellPower: 800},
+		})
+
+		longlegStack := core.MakeStackingAura(character, core.StackingStatAura{
+			Aura: core.Aura{
+				Label:     "Чародейская искра",
+				ActionID:  core.ActionID{ItemID: 305654},
+				Duration:  time.Second * 10,
+				MaxStacks: 10,
+				OnCastComplete: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell) {
+					aura.AddStack(sim)
+					if aura.GetStacks() == aura.MaxStacks {
+						longlegPower.Activate(sim)
+						aura.Deactivate(sim)
+					}
+				},
+			},
+			BonusPerStack: stats.Stats{stats.SpellPower: 30},
+		})
+		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+			Name:       "Эмблема зеркального долгонога",
+			Callback:   core.CallbackOnSpellHitDealt,
+			ProcChance: 1,
+			Handler: func(sim *core.Simulation, _ *core.Spell, _ *core.SpellResult) {
+				longlegStack.Activate(sim)
+			},
+		})
+	})
+
 	core.NewItemEffect(38212, func(agent core.Agent) {
 		character := agent.GetCharacter()
 
