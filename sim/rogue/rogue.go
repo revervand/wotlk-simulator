@@ -26,11 +26,12 @@ func RegisterRogue() {
 }
 
 const (
-	SpellFlagBuilder  = core.SpellFlagAgentReserved2
-	SpellFlagFinisher = core.SpellFlagAgentReserved3
-	AssassinTree      = 0
-	CombatTree        = 1
-	SubtletyTree      = 2
+	SpellFlagBuilder     = core.SpellFlagAgentReserved2
+	SpellFlagFinisher    = core.SpellFlagAgentReserved3
+	SpellFlagColdBlooded = core.SpellFlagAgentReserved4
+	AssassinTree         = 0
+	CombatTree           = 1
+	SubtletyTree         = 2
 )
 
 var TalentTreeSizes = [3]int{27, 28, 28}
@@ -89,7 +90,8 @@ type Rogue struct {
 	Rupture      *core.Spell
 	SliceAndDice *core.Spell
 
-	lastDeadlyPoisonProcMask    core.ProcMask
+	lastDeadlyPoisonProcMask core.ProcMask
+
 	deadlyPoisonProcChanceBonus float64
 	instantPoisonPPMM           core.PPMManager
 	woundPoisonPPMM             core.PPMManager
@@ -127,8 +129,8 @@ func (rogue *Rogue) GetRogue() *Rogue {
 	return rogue
 }
 
-func (rogue *Rogue) AddRaidBuffs(raidBuffs *proto.RaidBuffs)    {}
-func (rogue *Rogue) AddPartyBuffs(partyBuffs *proto.PartyBuffs) {}
+func (rogue *Rogue) AddRaidBuffs(_ *proto.RaidBuffs)   {}
+func (rogue *Rogue) AddPartyBuffs(_ *proto.PartyBuffs) {}
 
 func (rogue *Rogue) finisherFlags() core.SpellFlag {
 	flags := SpellFlagFinisher
@@ -185,7 +187,6 @@ func (rogue *Rogue) Initialize() {
 	rogue.registerEnvenom()
 
 	rogue.finishingMoveEffectApplier = rogue.makeFinishingMoveEffectApplier()
-	rogue.DelayDPSCooldownsForArmorDebuffs(time.Second * 10)
 }
 
 func (rogue *Rogue) getExpectedEnergyPerSecond() float64 {
@@ -201,9 +202,13 @@ func (rogue *Rogue) ApplyEnergyTickMultiplier(multiplier float64) {
 	rogue.EnergyTickMultiplier += multiplier
 }
 
-func (rogue *Rogue) getExpectedComboPointPerSecond() float64 {
+func (rogue *Rogue) getExpectedComboPointsPerSecond() float64 {
+	return 1 / rogue.getExpectedSecondsPerComboPoint()
+}
+
+func (rogue *Rogue) getExpectedSecondsPerComboPoint() float64 {
 	honorAmongThievesChance := []float64{0, 0.33, 0.66, 1.0}[rogue.Talents.HonorAmongThieves]
-	return 1 / (1 + 1/(float64(rogue.Options.HonorOfThievesCritRate+100)/100*honorAmongThievesChance))
+	return 1 + 1/(float64(rogue.Options.HonorOfThievesCritRate+100)/100*honorAmongThievesChance)
 }
 
 func (rogue *Rogue) Reset(sim *core.Simulation) {
@@ -211,7 +216,6 @@ func (rogue *Rogue) Reset(sim *core.Simulation) {
 		mcd.Disable()
 	}
 	rogue.allMCDsDisabled = true
-	rogue.lastDeadlyPoisonProcMask = core.ProcMaskEmpty
 
 	// Stealth triggered effects (Overkill and Master of Subtlety) pre-pull activation
 	if rogue.Rotation.OpenWithGarrote || rogue.Options.StartingOverkillDuration > 0 {

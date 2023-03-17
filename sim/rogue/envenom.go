@@ -26,7 +26,7 @@ func (rogue *Rogue) registerEnvenom() {
 		ActionID:     core.ActionID{SpellID: 57993},
 		SpellSchool:  core.SpellSchoolNature,
 		ProcMask:     core.ProcMaskMeleeMHSpecial, // not core.ProcMaskSpellDamage
-		Flags:        core.SpellFlagMeleeMetrics | rogue.finisherFlags(),
+		Flags:        core.SpellFlagMeleeMetrics | rogue.finisherFlags() | SpellFlagColdBlooded,
 		MetricSplits: 6,
 
 		EnergyCost: core.EnergyCostOptions{
@@ -86,4 +86,8 @@ func (rogue *Rogue) registerEnvenom() {
 			spell.DealDamage(sim, result)
 		},
 	})
+}
+
+func (rogue *Rogue) EnvenomDuration(comboPoints int32) time.Duration {
+	return time.Second * (1 + time.Duration(comboPoints))
 }
