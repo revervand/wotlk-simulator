@@ -299,7 +299,7 @@ var ItemSetWarriorDPST4 = core.NewItemSet(core.ItemSet{
 						warrior.BloodsurgeAura.Deactivate(sim)
 						bloodSurgeWasActive = false
 					}
-					
+
 					if warrior.BloodsurgeAura.IsActive() {
 						warrior.BloodsurgeAura.Deactivate(sim)
 						bloodSurgeWasActive = true
@@ -366,7 +366,7 @@ var ItemSetWarriorDPST4 = core.NewItemSet(core.ItemSet{
 					if !spell.ProcMask.Matches(core.ProcMaskMelee) {
 						return
 					}
-	
+
 					if warrior.PouringOutAngerProc.IsActive() {
 						return
 					}
@@ -379,7 +379,7 @@ var ItemSetWarriorDPST4 = core.NewItemSet(core.ItemSet{
 					stacks := angerAccumulatorAura.GetStacks()
 					// 50% chance to get stack
 					if result.Outcome.Matches(core.OutcomeLanded) {
-						if sim.RandomFloat("Anger accum fury t4") < 0.5 {	
+						if sim.RandomFloat("Anger accum fury t4") < 0.7 {
 							if stacks == 4 {
 								if spell == warrior.Slam {
 									activatedBySlam = true
