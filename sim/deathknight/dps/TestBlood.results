@@ -6,7 +6,7 @@ character_stats_results: {
   final_stats: 1807.7015
   final_stats: 174.9
   final_stats: 228.8
-  final_stats: 280
+  final_stats: 500
   final_stats: 109
   final_stats: 289.696
   final_stats: 1323.1
@@ -705,6 +705,13 @@ dps_results: {
 }
 dps_results: {
  key: "TestBlood-AllItems-SliverofPureIce-50346"
+ value: {
+  dps: 6761.54998
+  tps: 3465.28577
+ }
+}
+dps_results: {
+ key: "TestBlood-AllItems-SoulPreserver-37111"
  value: {
   dps: 6761.54998
   tps: 3465.28577

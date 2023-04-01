@@ -451,6 +451,7 @@ func init() {
 			OnReset: func(aura *core.Aura, sim *core.Simulation) {
 				aura.Activate(sim)
 			},
+			OnHealDealt:           callback,
 			OnPeriodicDamageDealt: callback,
 			OnSpellHitDealt:       callback,
 		})

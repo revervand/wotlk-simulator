@@ -15,6 +15,7 @@ func (warlock *Warlock) registerUnstableAfflictionSpell() {
 		ActionID:    core.ActionID{SpellID: 47843},
 		SpellSchool: core.SpellSchoolShadow,
 		ProcMask:    core.ProcMaskSpellDamage,
+		Flags:       core.SpellFlagHauntSE,
 
 		ManaCost: core.ManaCostOptions{
 			BaseCost:   0.15,
@@ -45,7 +46,7 @@ func (warlock *Warlock) registerUnstableAfflictionSpell() {
 			NumberOfTicks: 5,
 			TickLength:    time.Second * 3,
 			OnSnapshot: func(sim *core.Simulation, target *core.Unit, dot *core.Dot, _ bool) {
-				dot.SnapshotBaseDamage = 1150/5 + spellCoeff*dot.Spell.SpellPower()
+				dot.SnapshotBaseDamage = 230 + spellCoeff*dot.Spell.SpellPower()
 				attackTable := dot.Spell.Unit.AttackTables[target.UnitIndex]
 				dot.SnapshotCritChance = dot.Spell.SpellCritChance(target)
 				dot.SnapshotAttackerMultiplier = dot.Spell.AttackerDamageMultiplier(attackTable)

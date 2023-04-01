@@ -6,7 +6,7 @@ character_stats_results: {
   final_stats: 3631.21696
   final_stats: 408.17462
   final_stats: 390.09696
-  final_stats: 280
+  final_stats: 500
   final_stats: 109
   final_stats: 138
   final_stats: 606.91928
@@ -815,6 +815,14 @@ dps_results: {
 }
 dps_results: {
  key: "TestFeralTank-AllItems-SliverofPureIce-50346"
+ value: {
+  dps: 2499.62074
+  tps: 5192.09999
+  dtps: 2.18293
+ }
+}
+dps_results: {
+ key: "TestFeralTank-AllItems-SoulPreserver-37111"
  value: {
   dps: 2499.62074
   tps: 5192.09999
