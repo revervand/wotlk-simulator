@@ -330,8 +330,7 @@ var ItemSetWarriorDPST4 = core.NewItemSet(core.ItemSet{
 
 					if spell == warrior.Slam && result.Landed() {
 						if warrior.SetBonusDPS4T4 {
-							warrior.CircularAttack.Cast(sim, warrior.CurrentTarget)
-							warrior.CircularAttack.Cast(sim, warrior.CurrentTarget)
+							warrior.CircularAttack.Activate(sim)
 						}
 						aura.Deactivate(sim)
 					}
@@ -342,7 +341,7 @@ var ItemSetWarriorDPST4 = core.NewItemSet(core.ItemSet{
 				Label:     "Anger accumulator", //  накопитель злобы - 319853
 				ActionID:  core.ActionID{SpellID: 319853},
 				Duration:  time.Second * 12,
-				MaxStacks: 5,
+				MaxStacks: 4,
 
 				OnReset: func(aura *core.Aura, sim *core.Simulation) {
 					aura.Activate(sim)
@@ -367,6 +366,11 @@ var ItemSetWarriorDPST4 = core.NewItemSet(core.ItemSet{
 						return
 					}
 
+					// disable stacks from OffHand Auto Attacks
+					if spell.ProcMask.Matches(core.ProcMaskMeleeOHAuto) {
+						return
+					}
+
 					if warrior.PouringOutAngerProc.IsActive() {
 						return
 					}
@@ -377,10 +381,10 @@ var ItemSetWarriorDPST4 = core.NewItemSet(core.ItemSet{
 						return
 					}
 					stacks := angerAccumulatorAura.GetStacks()
-					// 50% chance to get stack
+					// 70% chance to get stack
 					if result.Outcome.Matches(core.OutcomeLanded) {
 						if sim.RandomFloat("Anger accum fury t4") < 0.7 {
-							if stacks == 4 {
+							if stacks == 3 {
 								if spell == warrior.Slam {
 									activatedBySlam = true
 								}
@@ -393,7 +397,7 @@ var ItemSetWarriorDPST4 = core.NewItemSet(core.ItemSet{
 			})
 		},
 		4: func(agent core.Agent) {
-			// increase damage of slam to 25%, handeled in slam.go
+			// increase damage of slam to 45%, handeled in slam.go
 		},
 	},
 })
