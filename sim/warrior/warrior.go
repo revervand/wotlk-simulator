@@ -89,10 +89,10 @@ type Warrior struct {
 	DefensiveStanceAura *core.Aura
 	BerserkerStanceAura *core.Aura
 
-	BloodsurgeAura  *core.Aura
+	BloodsurgeAura      *core.Aura
 	PouringOutAngerProc *core.Aura
-	SuddenDeathAura *core.Aura
-	ShieldBlockAura *core.Aura
+	SuddenDeathAura     *core.Aura
+	ShieldBlockAura     *core.Aura
 
 	DemoralizingShoutAuras core.AuraArray
 	BloodFrenzyAuras       []*core.Aura
@@ -101,11 +101,11 @@ type Warrior struct {
 	ThunderClapAuras       core.AuraArray
 
 	// T4 helpers
-	SetBonusDPS2T4 bool
-	SetBonusDPS4T4 bool
+	SetBonusDPS2T4       bool
+	SetBonusDPS4T4       bool
 	PouringAngerWasFaded bool
 	// 4t4 Fury additional spell
-	CircularAttack       *core.Spell
+	CircularAttack *core.Dot
 }
 
 func (warrior *Warrior) GetCharacter() *core.Character {
@@ -159,7 +159,7 @@ func (warrior *Warrior) Initialize() {
 	warrior.registerWhirlwindSpell()
 	warrior.registerShockwaveSpell()
 	warrior.registerConcussionBlowSpell()
-	
+
 	// 4t4 fury extra spell
 	warrior.registerCircularAttackSpell()
 
