@@ -96,11 +96,7 @@ type Warrior struct {
 	SetBonusDPS4T4       bool
 	PouringAngerWasFaded bool
 	// 4t4 Fury additional spell
-<<<<<<< HEAD
-	CircularAttack *core.Spell
-=======
 	CircularAttack *core.Dot
->>>>>>> 5a21e0fff ([fury-t4] update)
 }
 
 func (warrior *Warrior) GetCharacter() *core.Character {

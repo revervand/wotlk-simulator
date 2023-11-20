@@ -1080,10 +1080,6 @@ export const specToClass: Record<Spec, Class> = {
 };
 
 const druidRaces = [
-<<<<<<< HEAD
-	Race.RaceTauren,
-	Race.RaceNightElf,
-=======
 	Race.RaceSindorei,
 	Race.RaceDraenei,
 	Race.RaceDwarf,
@@ -1107,7 +1103,6 @@ const druidRaces = [
 	Race.RaceLightDraenei,
 	Race.RaceGoblin,
 	Race.RacePanda,
->>>>>>> 83c7dbabb (add all races and enbale cyrillic search for items/gems/ecnhants)
 ];
 const hunterRaces = [
 	Race.RaceSindorei,
@@ -1135,19 +1130,11 @@ const hunterRaces = [
 	Race.RacePanda,
 ];
 const mageRaces = [
-<<<<<<< HEAD
-	Race.RaceTroll,
-	Race.RaceBloodElf,
-=======
 	Race.RaceSindorei,
->>>>>>> 83c7dbabb (add all races and enbale cyrillic search for items/gems/ecnhants)
 	Race.RaceDraenei,
 	Race.RaceDwarf,
 	Race.RaceGnome,
 	Race.RaceHuman,
-<<<<<<< HEAD
-	Race.RaceUndead,
-=======
 	Race.RaceNightElf,
 	Race.RaceOrc,
 	Race.RaceTauren,
@@ -1166,7 +1153,6 @@ const mageRaces = [
 	Race.RaceLightDraenei,
 	Race.RaceGoblin,
 	Race.RacePanda,
->>>>>>> 83c7dbabb (add all races and enbale cyrillic search for items/gems/ecnhants)
 ];
 const paladinRaces = [
 	Race.RaceSindorei,
@@ -1194,20 +1180,12 @@ const paladinRaces = [
 	Race.RacePanda,
 ];
 const priestRaces = [
-<<<<<<< HEAD
-	Race.RaceTroll,
-	Race.RaceBloodElf,
-=======
 	Race.RaceSindorei,
->>>>>>> 83c7dbabb (add all races and enbale cyrillic search for items/gems/ecnhants)
 	Race.RaceDraenei,
 	Race.RaceDwarf,
 	Race.RaceGnome,
 	Race.RaceHuman,
 	Race.RaceNightElf,
-<<<<<<< HEAD
-	Race.RaceUndead,
-=======
 	Race.RaceOrc,
 	Race.RaceTauren,
 	Race.RaceTroll,
@@ -1225,7 +1203,6 @@ const priestRaces = [
 	Race.RaceLightDraenei,
 	Race.RaceGoblin,
 	Race.RacePanda,
->>>>>>> 83c7dbabb (add all races and enbale cyrillic search for items/gems/ecnhants)
 ];
 const rogueRaces = [
 	Race.RaceSindorei,
@@ -1253,15 +1230,12 @@ const rogueRaces = [
 	Race.RacePanda,
 ];
 const shamanRaces = [
-<<<<<<< HEAD
-=======
 	Race.RaceSindorei,
 	Race.RaceDraenei,
 	Race.RaceDwarf,
 	Race.RaceGnome,
 	Race.RaceHuman,
 	Race.RaceNightElf,
->>>>>>> 83c7dbabb (add all races and enbale cyrillic search for items/gems/ecnhants)
 	Race.RaceOrc,
 	Race.RaceDraenei,
 	Race.RaceTauren,
