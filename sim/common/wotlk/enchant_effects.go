@@ -216,25 +216,23 @@ func init() {
 
 	core.NewEnchantEffect(4046, func(agent core.Agent) {
 		character := agent.GetCharacter()
-		mh := character.Equip[proto.ItemSlot_ItemSlotMainHand].Enchant.EffectID == 4046
-		oh := character.Equip[proto.ItemSlot_ItemSlotOffHand].Enchant.EffectID == 4046
 
-		procMask := core.GetMeleeProcMaskForHands(mh, oh)
+		procMask := character.GetProcMaskForEnchant(4046)
 		ppmm := character.AutoAttacks.NewPPMManager(1.0, procMask)
 
 		// Modify only gear armor, including from agility
-		fivePercentOfArmor := (character.Equip.Stats()[stats.Armor] + 2.0*character.Equip.Stats()[stats.Agility]) * 0.05
+		fivePercentOfArmor := (character.EquipStats()[stats.Armor] + 2.0*character.EquipStats()[stats.Agility]) * 0.05
 		procAuraMH := character.NewTemporaryStatsAura("Berserking MH Proc", core.ActionID{SpellID: 59620, Tag: 1}, stats.Stats{stats.AttackPower: 600, stats.RangedAttackPower: 600, stats.Armor: -fivePercentOfArmor}, time.Second*15)
 		procAuraOH := character.NewTemporaryStatsAura("Berserking OH Proc", core.ActionID{SpellID: 59620, Tag: 2}, stats.Stats{stats.AttackPower: 600, stats.RangedAttackPower: 600, stats.Armor: -fivePercentOfArmor}, time.Second*15)
 
 		aura := character.GetOrRegisterAura(core.Aura{
-			Label:    "Berserking (Enchant)",
+			Label:    "Berserking 2 (Enchant)",
 			Duration: core.NeverExpires,
 			OnReset: func(aura *core.Aura, sim *core.Simulation) {
 				aura.Activate(sim)
 			},
 			OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
-				if !result.Landed() || !spell.ProcMask.Matches(core.ProcMaskMelee) {
+				if !result.Landed() {
 					return
 				}
 
@@ -249,6 +247,7 @@ func init() {
 		})
 
 		character.ItemSwap.RegisterOnSwapItemForEffectWithPPMManager(4046, 1.0, &ppmm, aura)
+
 	})
 
 	// TODO: These are stand-in values without any real reference.
@@ -342,7 +341,7 @@ func init() {
 			},
 		})
 
-		character.ItemSwap.ReigsterOnSwapItemForEffect(4047, aura)
+		character.ItemSwap.RegisterOnSwapItemForEffect(4047, aura)
 	})
 
 	core.AddWeaponEffect(3843, func(agent core.Agent, _ proto.ItemSlot) {

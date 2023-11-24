@@ -286,8 +286,7 @@ var ItemSetWarriorDPST4 = core.NewItemSet(core.ItemSet{
 	Bonuses: map[int32]core.ApplyEffect{
 		2: func(agent core.Agent) {
 			warrior := agent.(WarriorAgent).GetWarrior()
-			bloodSurgeWasActive := false
-			activatedBySlam := false
+			var bonus_spellpower float64
 
 			warrior.PouringOutAngerProc = warrior.RegisterAura(core.Aura{
 				Label:    "Pouring out anger", // Изливающаяся злоба - 319854
@@ -295,42 +294,17 @@ var ItemSetWarriorDPST4 = core.NewItemSet(core.ItemSet{
 				Duration: time.Second * 12,
 
 				OnGain: func(aura *core.Aura, sim *core.Simulation) {
-					if activatedBySlam {
-						warrior.BloodsurgeAura.Deactivate(sim)
-						bloodSurgeWasActive = false
-					}
-
-					if warrior.BloodsurgeAura.IsActive() {
-						warrior.BloodsurgeAura.Deactivate(sim)
-						bloodSurgeWasActive = true
-					}
-					warrior.Slam.DefaultCast.CastTime = 0
-					warrior.Slam.DamageMultiplierAdditive += 1.15
+					bonus_spellpower = warrior.GetStats()[stats.AttackPower]
+					warrior.Execute.BonusSpellPower += bonus_spellpower
 				},
 				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-					warrior.Slam.DefaultCast.CastTime = 1500 * time.Millisecond
-					warrior.Slam.DamageMultiplierAdditive -= 1.15
-
-					if bloodSurgeWasActive {
-						warrior.BloodsurgeAura.Activate(sim)
-						bloodSurgeWasActive = false
-					}
+					warrior.Execute.BonusSpellPower -= bonus_spellpower
 				},
+
 				OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
-					if activatedBySlam {
-						activatedBySlam = false
-						return
-					}
-
-					if warrior.BloodsurgeAura.IsActive() {
-						bloodSurgeWasActive = true
-						warrior.BloodsurgeAura.Deactivate(sim)
-						warrior.Slam.DefaultCast.CastTime = 0
-					}
-
-					if spell == warrior.Slam && result.Landed() {
+					if spell == warrior.Execute && result.Landed() {
 						if warrior.SetBonusDPS4T4 {
-							warrior.CircularAttack.Activate(sim)
+							warrior.UnsurpassedArt.Activate(sim)
 						}
 						aura.Deactivate(sim)
 					}
@@ -341,7 +315,7 @@ var ItemSetWarriorDPST4 = core.NewItemSet(core.ItemSet{
 				Label:     "Anger accumulator", //  накопитель злобы - 319853
 				ActionID:  core.ActionID{SpellID: 319853},
 				Duration:  time.Second * 12,
-				MaxStacks: 4,
+				MaxStacks: 6,
 
 				OnReset: func(aura *core.Aura, sim *core.Simulation) {
 					aura.Activate(sim)
@@ -371,6 +345,7 @@ var ItemSetWarriorDPST4 = core.NewItemSet(core.ItemSet{
 						return
 					}
 
+					// check if we already have activeaura
 					if warrior.PouringOutAngerProc.IsActive() {
 						return
 					}
@@ -380,24 +355,36 @@ var ItemSetWarriorDPST4 = core.NewItemSet(core.ItemSet{
 						angerAccumulatorAura.SetStacks(sim, 1)
 						return
 					}
-					stacks := angerAccumulatorAura.GetStacks()
-					// 70% chance to get stack
+
+					// 100% chance to get stack
 					if result.Outcome.Matches(core.OutcomeLanded) {
-						if sim.RandomFloat("Anger accum fury t4") < 0.7 {
-							if stacks == 3 {
-								if spell == warrior.Slam {
-									activatedBySlam = true
-								}
-							}
-							angerAccumulatorAura.SetStacks(sim, angerAccumulatorAura.GetStacks()+1)
-						}
+						angerAccumulatorAura.SetStacks(sim, angerAccumulatorAura.GetStacks()+1)
 						return
 					}
 				},
 			})
 		},
 		4: func(agent core.Agent) {
-			// increase damage of slam to 45%, handeled in slam.go
+			// increase damage of slam to 55%, handeled in slam.go
+			warrior := agent.(WarriorAgent).GetWarrior()
+
+			warrior.UnsurpassedArt = warrior.RegisterAura(core.Aura{
+				Label:    "Unsurpassed art", // Непревзойденное искусство - 319856
+				ActionID: core.ActionID{SpellID: 319856},
+				Duration: time.Second * 4,
+
+				OnGain: func(aura *core.Aura, sim *core.Simulation) {
+					// add 100% damage multiplier to Bloodthirst
+					warrior.Bloodthirst.DamageMultiplierAdditive += 1.0
+					warrior.CircularAttack.Cast(sim, sim.GetTargetUnit(0))
+				},
+
+				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+					// remove 100% damage multiplier from Bloodthrist
+					warrior.Bloodthirst.DamageMultiplier -= 1.0
+					warrior.CircularAttack.Cast(sim, sim.GetTargetUnit(0))
+				},
+			})
 		},
 	},
 })

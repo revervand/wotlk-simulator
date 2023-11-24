@@ -6,10 +6,10 @@ import (
 
 // 319857
 func (warrior *Warrior) registerCircularAttackSpell() {
-	numHits := core.MinInt32(4, warrior.Env.GetNumTargets())
+	numHits := min(3, warrior.Env.GetNumTargets())
 	results := make([]*core.SpellResult, numHits)
 
-	CircularAttackSpellOH := warrior.RegisterSpell(core.SpellConfig{
+	warrior.CircularAttackOH = warrior.RegisterSpell(core.SpellConfig{
 		ActionID:    core.ActionID{SpellID: 319857},
 		SpellSchool: core.SpellSchoolPhysical,
 		ProcMask:    core.ProcMaskMeleeOHSpecial,
@@ -17,11 +17,11 @@ func (warrior *Warrior) registerCircularAttackSpell() {
 
 		DamageMultiplier: 1,
 		CritMultiplier:   warrior.critMultiplier(oh),
-		ThreatMultiplier: 1.25,
+		ThreatMultiplier: 1.0,
 	},
 	)
 
-	CircularAttackSpell := warrior.RegisterSpell(core.SpellConfig{
+	warrior.CircularAttack = warrior.RegisterSpell(core.SpellConfig{
 		ActionID:    core.ActionID{SpellID: 319857},
 		SpellSchool: core.SpellSchoolPhysical,
 		ProcMask:    core.ProcMaskMeleeMHSpecial,
@@ -35,10 +35,6 @@ func (warrior *Warrior) registerCircularAttackSpell() {
 				GCD: 0,
 			},
 			IgnoreHaste: true,
-			CD: core.Cooldown{
-				Timer:    warrior.NewTimer(),
-				Duration: 0,
-			},
 		},
 
 		DamageMultiplier: 1,
@@ -68,14 +64,14 @@ func (warrior *Warrior) registerCircularAttackSpell() {
 					baseDamage := 0 +
 						spell.Unit.OHWeaponDamage(sim, spell.MeleeAttackPower()) +
 						spell.BonusWeaponDamage()
-					results[hitIndex] = CircularAttackSpellOH.CalcDamage(sim, curTarget, baseDamage, CircularAttackSpellOH.OutcomeMeleeWeaponSpecialHitAndCrit)
+					results[hitIndex] = warrior.CircularAttackOH.CalcDamage(sim, curTarget, baseDamage, warrior.CircularAttackOH.OutcomeMeleeWeaponSpecialHitAndCrit)
 
 					curTarget = sim.Environment.NextTargetUnit(curTarget)
 				}
 
 				curTarget = target
 				for hitIndex := int32(0); hitIndex < numHits; hitIndex++ {
-					CircularAttackSpellOH.DealDamage(sim, results[hitIndex])
+					warrior.CircularAttackOH.DealDamage(sim, results[hitIndex])
 					curTarget = sim.Environment.NextTargetUnit(curTarget)
 				}
 			}

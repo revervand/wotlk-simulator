@@ -83,7 +83,8 @@ type Warrior struct {
 	BerserkerStanceAura *core.Aura
 
 	BloodsurgeAura      *core.Aura
-	PouringOutAngerProc *core.Aura
+	PouringOutAngerProc *core.Aura // T4 proc aura
+	UnsurpassedArt      *core.Aura // T4 proc aura
 	SuddenDeathAura     *core.Aura
 	ShieldBlockAura     *core.Aura
 
@@ -96,7 +97,8 @@ type Warrior struct {
 	SetBonusDPS4T4       bool
 	PouringAngerWasFaded bool
 	// 4t4 Fury additional spell
-	CircularAttack *core.Dot
+	CircularAttack   *core.Spell
+	CircularAttackOH *core.Spell
 }
 
 func (warrior *Warrior) GetCharacter() *core.Character {

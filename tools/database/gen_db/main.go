@@ -536,7 +536,7 @@ func GetAllRotationSpellIds() map[string][]int32 {
 		}, &proto.Player_ProtectionPaladin{ProtectionPaladin: &proto.ProtectionPaladin{Options: &proto.ProtectionPaladin_Options{}, Rotation: &proto.ProtectionPaladin_Rotation{}}}), nil, nil, nil)},
 		{Name: "ret", Raid: core.SinglePlayerRaidProto(core.WithSpec(&proto.Player{
 			Class:         proto.Class_ClassPaladin,
-			Race:          proto.Race_RaceBloodElf,
+			Race:          proto.Race_RaceSindorei,
 			Equipment:     &proto.EquipmentSpec{},
 			TalentsString: "050501-05-05232051203331302133231331",
 		}, &proto.Player_RetributionPaladin{RetributionPaladin: &proto.RetributionPaladin{Options: &proto.RetributionPaladin_Options{}, Rotation: &proto.RetributionPaladin_Rotation{}}}), nil, nil, nil)},
